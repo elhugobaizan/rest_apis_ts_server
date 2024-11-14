@@ -35,7 +35,7 @@ const corsOptions: CorsOptions = {
         }
     }
 }
-server.use(cors(corsOptions));
+server.use(cors());
 server.use(morgan('dev'));
 
 server.use('/api', router);
