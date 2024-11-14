@@ -6,12 +6,13 @@ import morgan from 'morgan';
 import cors, { CorsOptions } from 'cors';
 import swaggerUI from 'swagger-ui-express';
 import swaggerSpec, { swaggerUIOptions } from "./config/swagger";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export async function connectDB() {
     try {
-        //await db.authenticate();
         await Product.sync({ force: false}).then(result => {
-            //console.log(result);
             console.log(colors.blue('Conectado Postgre DB!'));
         });
     } catch (error) {
@@ -24,8 +25,8 @@ connectDB();
 const server = express();
 
 server.use(express.json());
-
-const originUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+console.log(process.env);
+const originUrl = process.env.FRONTEND_URL;
 const corsOptions: CorsOptions = {
     origin: function(origin, callback) {
         if(origin===originUrl) {
