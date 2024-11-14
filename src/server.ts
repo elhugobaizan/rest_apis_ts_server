@@ -24,9 +24,11 @@ connectDB();
 const server = express();
 
 server.use(express.json());
+
+const originUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 const corsOptions: CorsOptions = {
     origin: function(origin, callback) {
-        if(origin==='http://localhost:5173') {
+        if(origin===originUrl) {
             console.log('Permitir...');
             callback(null,true);
         } else {
@@ -35,7 +37,7 @@ const corsOptions: CorsOptions = {
         }
     }
 }
-server.use(cors());
+server.use(cors(corsOptions));
 server.use(morgan('dev'));
 
 server.use('/api', router);
